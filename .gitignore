@@ -3,6 +3,7 @@
 *.out
 *.o
 *.a
+push_swap
 
 # OS generated files #
 ######################

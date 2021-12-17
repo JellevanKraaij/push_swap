@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jvan-kra <jvan-kra@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/10/19 15:45:22 by jvan-kra          #+#    #+#              #
-#    Updated: 2021/12/16 18:45:01 by jvan-kra         ###   ########.fr        #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: jvan-kra <jvan-kra@student.42.fr>            +#+                      #
+#                                                    +#+                       #
+#    Created: 2021/10/19 15:45:22 by jvan-kra      #+#    #+#                  #
+#    Updated: 2021/12/17 21:55:19 by jvan-kra      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,15 +16,15 @@ HEADERS_DIR	=	includes
 SRCS_DIR	=	srcs
 BUILD_DIR	=	build
 LIBFT		=	libft/libft.a
-CFLAGS 		=	-Wall -Wextra
+CFLAGS 		=	-g -Wall -Wextra
 
 SRCS		=	main.c \
 				input_parsing.c \
 				utils/constructors.c \
 				utils/errors.c \
 				utils/ft_atoi_p.c \
-
-
+				debug/print.c \
+				instructions.c
 
 DIR_CREATE	= @mkdir -p $(@D)
 _HEADERS	= ${addprefix ${HEADERS_DIR}/, ${HEADERS}}

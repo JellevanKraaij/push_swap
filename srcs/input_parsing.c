@@ -6,22 +6,32 @@
 /*   By: jvan-kra <jvan-kra@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/16 16:54:05 by jvan-kra      #+#    #+#                 */
-/*   Updated: 2021/12/17 18:31:14 by jvan-kra      ########   odam.nl         */
+/*   Updated: 2022/01/27 20:48:10 by jvan-kra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	check_doubles(t_stacks *stack, int num)
+static int	check_doubles(t_vars *vars, int num)
 {
-	int	i;
+	t_lststack *tmp;
 
-	i = 0;
-	while (stack->a[i].filled)
+	if (vars->stack_a == NULL)
+		return (0);
+
+	tmp = vars->stack_a->next;
+
+	if (vars->stack_a->idx == num)
 	{
-		if (stack->a[i].num == num)
-			return (1);
-		i++;
+		printf("first index error\n");
+		return(1);
+	}
+
+	while (vars->stack_a != tmp)
+	{
+		if (tmp->idx == num)
+			return(1);
+		tmp = tmp->next;
 	}
 	return (0);
 }
@@ -29,20 +39,36 @@ static int	check_doubles(t_stacks *stack, int num)
 void	parse_input(t_vars *vars, int argc, const char *argv[])
 {
 	int	i;
+	t_lststack *lsttmp;
+	int tmp;
 
 	if (argc < 2)
 		error_exit();
-	vars->stack = init_stacks(argc - 1);
-	i = 0;
-	while (i < argc - 1)
-	{
-		if (ft_atoi_p(argv[i + 1], &vars->stack->a[i].num) || \
-		check_doubles(vars->stack, vars->stack->a[i].num))
+	i = 1;
+
+	if (ft_atoi_p(argv[i], &tmp) || \
+		check_doubles(vars, tmp))
 		{
-			destroy_stacks(vars->stack);
+			// stack_clear_list(vars->stack_a);
 			error_exit();
 		}
-		vars->stack->a[i].filled = 1;
+	vars->stack_a = stack_create_elem(tmp);
+	lsttmp = vars->stack_a;
+	i++;
+	while (i < argc)
+	{
+		if (ft_atoi_p(argv[i], &tmp) || \
+		check_doubles(vars, tmp))
+			{
+			printf("i = %d, num = %d\n", i, tmp);
+			// stack_clear_list(vars->stack_a);
+			error_exit();
+			}
+		lsttmp->next = stack_create_elem(tmp);
+		lsttmp->next->prev = lsttmp;
+		lsttmp = lsttmp->next;
+		vars->stack_a->prev = lsttmp;
+		lsttmp->next = vars->stack_a;
 		i++;
 	}
 }

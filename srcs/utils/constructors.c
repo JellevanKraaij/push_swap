@@ -12,20 +12,28 @@
 
 #include "push_swap.h"
 
-t_stacks	*init_stacks(int stack_size)
+t_lststack *stack_create_elem(int idx)
 {
-	t_stacks	*stack;
+	t_lststack *ret;
 
-	stack = null_exit(malloc(sizeof(t_stacks)));
-	stack->a = null_exit(ft_calloc(stack_size, sizeof(t_stack_idx)));
-	stack->b = null_exit(ft_calloc(stack_size, sizeof(t_stack_idx)));
-	stack->size = stack_size;
-	return (stack);
+	ret = null_exit(malloc(sizeof(t_lststack)));
+
+	ret->idx = idx;
+	ret->prev = ret;
+	ret->next = ret;
+	return (ret);
 }
 
-void	destroy_stacks(t_stacks *stack)
+void	stack_clear_list(t_lststack *stack)
 {
-	free(stack->a);
-	free(stack->b);
-	free(stack);
+	t_lststack *tmp;
+
+	tmp = stack->next;
+
+	free(tmp->prev);
+	while (stack != tmp)
+	{
+		tmp = tmp->next;
+		free(tmp->prev);
+	}
 }

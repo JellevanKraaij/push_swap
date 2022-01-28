@@ -12,29 +12,32 @@
 
 #include "push_swap.h"
 
-void	print_stacks(t_stacks *stack)
+void	print_stacks(t_vars *vars)
 {
-	int	i;
+	t_lststack *tmp;
 
-	i = 0;
 	printf("stackA  ");
-	while (i < stack->size)
+	if (vars->stack_a != NULL)
 	{
-		if (stack->a->filled)
-			printf("%-5d", stack->a[i].num);
-		else
-			printf("X    ");
-		i++;
+		tmp = vars->stack_a->next;
+		printf("%-5d", vars->stack_a->idx);
+		while (vars->stack_a != tmp)
+		{
+			printf("%-5d", tmp->idx);
+			tmp = tmp->next;
+		}
 	}
 	printf("\nstackB  ");
-	i = 0;
-	while (i < stack->size)
+	if (vars->stack_b != NULL)
 	{
-		if (stack->b[i].filled)
-			printf("%-5d", stack->b[i].num);
-		else
-			printf("X    ");
-		i++;
+		tmp = vars->stack_b->next;
+
+		printf("%-5d", vars->stack_b->idx);
+		while (vars->stack_b != tmp)
+		{
+			printf("%-5d", tmp->idx);
+			tmp = tmp->next;
+		}
 	}
 	printf("\n");
 }

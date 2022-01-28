@@ -6,7 +6,7 @@
 /*   By: jvan-kra <jvan-kra@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/16 15:36:02 by jvan-kra      #+#    #+#                 */
-/*   Updated: 2021/12/17 21:08:05 by jvan-kra      ########   odam.nl         */
+/*   Updated: 2022/01/27 20:24:59 by jvan-kra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,28 +27,23 @@
 # define REVERSE_ROTATE_B	"rrb"
 # define REVERSE_ROTATE_AB	"rrr"
 
-typedef struct u_stack_idx
+typedef struct s_lststack
 {
-	int		num;
-	int8_t	filled;
-}	t_stack_idx;
-
-typedef struct s_stacks
-{
-	t_stack_idx	*a;
-	t_stack_idx	*b;
-	int			size;
-}	t_stacks;
+	struct s_lststack	*prev;
+	int		idx;
+	struct s_lststack	*next;
+}	t_lststack;
 
 typedef struct s_vars
 {
-	t_stacks	*stack;
+	t_lststack	*stack_a;
+	t_lststack	*stack_b;
 	t_list		*instructions;
 }	t_vars;
 
 //constructors
-t_stacks	*init_stacks(int stack_size);
-void		destroy_stacks(t_stacks *stack);
+t_lststack	*stack_create_elem(int idx);
+void		stack_clear_list(t_lststack *stack);
 
 //input parsing
 void		parse_input(t_vars *vars, int argc, const char *argv[]);
@@ -59,10 +54,19 @@ void		error_exit(void);
 void		*null_exit(void *ptr);
 
 //debuggers
-void		print_stacks(t_stacks *stack);
+void		print_stacks(t_vars *stack);
 
 //instructions
-void		swap_a(t_vars *vars);
-void		rotate_a(t_vars *vars);
+void	swap_a(t_vars *vars);
+void	swap_b(t_vars *vars);
+void	swap_ab(t_vars *vars);
+void	push_a(t_vars *vars);
+void	push_b(t_vars *vars);
+void	rotate_a(t_vars *vars);
+void	rotate_b(t_vars *vars);
+void	rotate_ab(t_vars *vars);
+void	reverse_rotate_a(t_vars *vars);
+void	reverse_rotate_b(t_vars *vars);
+void	reverse_rotate_ab(t_vars *vars);
 
 #endif

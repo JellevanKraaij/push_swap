@@ -27,6 +27,8 @@
 # define REVERSE_ROTATE_B	"rrb"
 # define REVERSE_ROTATE_AB	"rrr"
 
+#define LASTBIT_T(x) (x ^ (1 << ((sizeof(int) * 8) - 1)))
+
 typedef struct s_lststack
 {
 	struct s_lststack	*prev;
@@ -39,11 +41,18 @@ typedef struct s_vars
 	t_lststack	*stack_a;
 	t_lststack	*stack_b;
 	t_list		*instructions;
+	int			arg_count;
 }	t_vars;
+
+void		print_result(t_vars *vars);
+void		solver(t_vars *vars);
+
 
 //constructors
 t_lststack	*stack_create_elem(int idx);
 void		stack_clear_list(t_lststack *stack);
+int stack_a_idx(t_vars *vars);
+int stack_b_idx(t_vars *vars);
 
 //input parsing
 void		parse_input(t_vars *vars, int argc, const char *argv[]);

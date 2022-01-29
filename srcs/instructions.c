@@ -16,6 +16,11 @@ void	swap_a(t_vars *vars)
 {	
 	int tmp;
 
+	if(vars->stack_a == NULL)
+		printf("error stack_a empty\n");
+	if(vars->stack_a == vars->stack_a->next)
+		printf("error only one item in stack_a\n");
+
 	tmp = vars->stack_a->idx;
 	vars->stack_a->idx = vars->stack_a->next->idx;
 	vars->stack_a->next->idx = tmp;
@@ -25,6 +30,11 @@ void	swap_a(t_vars *vars)
 void	swap_b(t_vars *vars)
 {	
 	int tmp;
+
+	if(vars->stack_b == NULL)
+		printf("error stack_b empty\n");
+	if(vars->stack_b == vars->stack_b->next)
+		printf("error only one item in stack_b\n");
 
 	tmp = vars->stack_b->idx;
 	vars->stack_b->idx = vars->stack_b->next->idx;
@@ -36,6 +46,10 @@ void	swap_ab(t_vars *vars)
 {	
 	int tmp;
 
+	if(vars->stack_a == NULL || vars->stack_b == NULL)
+		printf("error stack_a or stack_b empty\n");
+	if(vars->stack_a == vars->stack_a->next || vars->stack_b == vars->stack_b->next)
+		printf("error only one item in stack_b\n");
 	tmp = vars->stack_a->idx;
 	vars->stack_a->idx = vars->stack_a->next->idx;
 	vars->stack_a->next->idx = tmp;
@@ -52,11 +66,19 @@ void	push_a(t_vars *vars)
 	
 	if(vars->stack_b == NULL)
 		printf("error stack_b empty\n");
+	printf("start push a\n");
 	tmp = vars->stack_b;
 	
-	vars->stack_b->prev->next = vars->stack_b->next;
-	vars->stack_b = vars->stack_b->next;
-
+	if (vars->stack_b != vars->stack_b->next)
+	{
+		vars->stack_b->prev->next = vars->stack_b->next;
+		vars->stack_b->next->prev = vars->stack_b->prev;
+		vars->stack_b = vars->stack_b->next;
+		
+	}
+	else
+		vars->stack_b = NULL;
+	printf("alive\n");
 	if (vars->stack_a == NULL)
 	{
 		vars->stack_a = tmp;
@@ -65,11 +87,13 @@ void	push_a(t_vars *vars)
 	}
 	else
 	{
-		vars->stack_a->prev = vars->stack_a;
+		vars->stack_a->prev->next = vars->stack_a;
+		tmp->prev = vars->stack_a->prev;
 		tmp->next = vars->stack_a;
 		vars->stack_a = tmp;
 	}
 	ft_lstadd_back(&vars->instructions, null_exit(ft_lstnew(PUSH_A)));
+	printf("end push a\n");
 }
 
 void	push_b(t_vars *vars)
@@ -80,8 +104,14 @@ void	push_b(t_vars *vars)
 		printf("error stack_a empty\n");
 	tmp = vars->stack_a;
 	
-	vars->stack_a->prev->next = vars->stack_a->next;
-	vars->stack_a = vars->stack_a->next;
+	if (vars->stack_a != vars->stack_a->next)
+	{
+		vars->stack_a->prev->next = vars->stack_a->next;
+		vars->stack_a->next->prev = vars->stack_a->prev;
+		vars->stack_a = vars->stack_a->next;
+	}
+	else
+		vars->stack_a = NULL;
 
 	if (vars->stack_b == NULL)
 	{
@@ -91,7 +121,8 @@ void	push_b(t_vars *vars)
 	}
 	else
 	{
-		vars->stack_b->prev = vars->stack_b;
+		vars->stack_b->prev->next = vars->stack_b;
+		tmp->prev = vars->stack_b->prev;
 		tmp->next = vars->stack_b;
 		vars->stack_b = tmp;
 	}
@@ -100,18 +131,24 @@ void	push_b(t_vars *vars)
 
 void	rotate_a(t_vars *vars)
 {
+	if(vars->stack_a == NULL)
+		printf("error stack_a empty\n");
 	vars->stack_a = vars->stack_a->next;
 	ft_lstadd_back(&vars->instructions, null_exit(ft_lstnew(ROTATE_A)));
 }
 
 void	rotate_b(t_vars *vars)
 {
+	if(vars->stack_b == NULL)
+		printf("error stack_b empty\n");
 	vars->stack_b = vars->stack_b->next;
 	ft_lstadd_back(&vars->instructions, null_exit(ft_lstnew(ROTATE_B)));
 }
 
 void	rotate_ab(t_vars *vars)
 {
+	if(vars->stack_a == NULL || vars->stack_b == NULL)
+		printf("error stack_a or stack_b empty\n");
 	vars->stack_a = vars->stack_a->next;
 	vars->stack_b = vars->stack_b->next;
 	ft_lstadd_back(&vars->instructions, null_exit(ft_lstnew(ROTATE_AB)));
@@ -120,18 +157,24 @@ void	rotate_ab(t_vars *vars)
 
 void	reverse_rotate_a(t_vars *vars)
 {
+	if(vars->stack_a == NULL)
+		printf("error stack_a empty\n");
 	vars->stack_a = vars->stack_a->prev;
 	ft_lstadd_back(&vars->instructions, null_exit(ft_lstnew(REVERSE_ROTATE_A)));
 }
 
 void	reverse_rotate_b(t_vars *vars)
 {
+	if(vars->stack_b == NULL)
+		printf("error stack_b empty\n");
 	vars->stack_b = vars->stack_b->prev;
 	ft_lstadd_back(&vars->instructions, null_exit(ft_lstnew(REVERSE_ROTATE_B)));
 }
 
 void	reverse_rotate_ab(t_vars *vars)
 {
+	if(vars->stack_a == NULL || vars->stack_b == NULL)
+		printf("error stack_a or stack_b empty\n");
 	vars->stack_a = vars->stack_a->prev;
 	vars->stack_b = vars->stack_b->prev;
 	ft_lstadd_back(&vars->instructions, null_exit(ft_lstnew(REVERSE_ROTATE_AB)));

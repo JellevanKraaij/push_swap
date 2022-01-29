@@ -12,6 +12,19 @@
 
 #include "push_swap.h"
 
+
+void print_result_f(void *data)
+{
+	printf("%s\n", (char *)data);
+}
+
+void print_result(t_vars *vars)
+{
+	printf("Instructions:\n");
+	ft_lstiter(vars->instructions, print_result_f);
+}
+
+
 int	main(int argc, char const *argv[])
 {
 	t_vars	vars;
@@ -19,7 +32,8 @@ int	main(int argc, char const *argv[])
 	ft_bzero(&vars, sizeof(vars));
 	parse_input(&vars, argc, argv);
 	print_stacks(&vars);
-	push_b(&vars);
 	printf("------------\n");
+	solver(&vars);
 	print_stacks(&vars);
+	print_result(&vars);
 }

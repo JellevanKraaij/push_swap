@@ -16,7 +16,7 @@ HEADERS_DIR	=	includes
 SRCS_DIR	=	srcs
 BUILD_DIR	=	build
 LIBFT		=	libft/libft.a
-CFLAGS 		=	-g -Wall -Wextra
+CFLAGS 		=	-g -Wall -Wextra -Werror
 
 SRCS		=	main.c \
 				input_parsing.c \
@@ -24,7 +24,8 @@ SRCS		=	main.c \
 				utils/errors.c \
 				utils/ft_atoi_p.c \
 				debug/print.c \
-				instructions.c
+				instructions.c \
+				solver.c
 
 DIR_CREATE	= @mkdir -p $(@D)
 _HEADERS	= ${addprefix ${HEADERS_DIR}/, ${HEADERS}}

@@ -37,3 +37,17 @@ void	stack_clear_list(t_lststack *stack)
 		free(tmp->prev);
 	}
 }
+
+int stack_a_idx(t_vars *vars)
+{
+	if (vars->stack_a == NULL)
+		printf("error stack_a empty\n");
+	return (vars->stack_a->idx);
+}
+
+int stack_b_idx(t_vars *vars)
+{
+	if (vars->stack_a == NULL)
+		printf("error stack_b empty\n");
+	return (vars->stack_b->idx);
+}

@@ -23,7 +23,6 @@ static int	check_doubles(t_vars *vars, int num)
 
 	if (vars->stack_a->idx == num)
 	{
-		printf("first index error\n");
 		return(1);
 	}
 
@@ -61,7 +60,7 @@ void	parse_input(t_vars *vars, int argc, const char *argv[])
 		check_doubles(vars, tmp))
 			{
 			printf("i = %d, num = %d\n", i, tmp);
-			// stack_clear_list(vars->stack_a);
+			stack_clear_list(vars->stack_a);
 			error_exit();
 			}
 		lsttmp->next = stack_create_elem(tmp);
@@ -71,4 +70,5 @@ void	parse_input(t_vars *vars, int argc, const char *argv[])
 		lsttmp->next = vars->stack_a;
 		i++;
 	}
+	vars->arg_count = argc - 1;
 }

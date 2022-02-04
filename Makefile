@@ -16,17 +16,20 @@ HEADERS_DIR	=	includes
 SRCS_DIR	=	srcs
 BUILD_DIR	=	build
 LIBFT		=	libft/libft.a
-CFLAGS 		=	-g -Wall -Wextra -Werror
+CFLAGS 		=	-Wall -Wextra -Werror
 
 SRCS		=	main.c \
 				input_parsing.c \
-				utils/constructors.c \
 				utils/errors.c \
 				utils/ft_atoi_p.c \
-				debug/print.c \
-				instructions.c \
 				solver.c \
-				small_solvers.c
+				small_solvers.c \
+				stack_functions/lststack_c_d.c \
+				stack_functions/lststack_m.c \
+				instructions/push.c \
+				instructions/swap.c \
+				instructions/rotate.c \
+				instructions/reverse_rotate.c \
 
 DIR_CREATE	= @mkdir -p $(@D)
 _HEADERS	= ${addprefix ${HEADERS_DIR}/, ${HEADERS}}
@@ -42,7 +45,7 @@ ${LIBFT}:
 	@${MAKE} -C libft
 
 ${NAME}: ${LIBFT} ${_OBJS}
-		${CC} ${_OBJS} ${LIBFT} -o ${NAME}
+		${CC} ${CFLAGS} ${_OBJS} ${LIBFT} -o ${NAME}
 
 clean:
 	@${MAKE} -C libft clean

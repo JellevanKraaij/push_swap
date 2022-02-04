@@ -39,51 +39,47 @@ typedef struct s_vars
 {
 	t_lststack		*stack_a;
 	t_lststack		*stack_b;
-	t_list			*instructions;
+	t_list			*instruc;
 	unsigned int	arg_count;
 }	t_vars;
 
-void		print_result(t_vars *vars);
-void		solver2(t_vars *vars);
-void		solver3(t_vars *vars);
-void		solver_radix(t_vars *vars);
-int			check_order_a(t_vars *vars);
-int			check_order_b(t_vars *vars);
+void			print_result(t_vars *vars);
+void			solver2(t_vars *vars);
+void			solver3(t_vars *vars);
+void			solver5(t_vars *vars);
+void			solver_radix(t_vars *vars);
+void			rotate_to_a(t_vars *vars, unsigned int num);
 
-
-//constructors
-t_lststack	*stack_create_elem(int nr);
-void		stack_clear_list(t_lststack *stack);
-unsigned int stack_a_idx(t_vars *vars);
-unsigned int stack_b_idx(t_vars *vars);
-unsigned int stack_a_next_idx(t_vars *vars);
-unsigned int stack_b_next_idx(t_vars *vars);
-
+//lststack functions
+t_lststack		*lststack_new(int nr);
+void			lststack_add_back(t_lststack **head, t_lststack *new);
+void			lststack_clear(t_lststack **stack);
+unsigned int	lststack_length(t_lststack *head);
+void			lststack_idx(t_lststack *head);
+int				lststack_check_order(t_lststack *head);
 
 //input parsing
-void		parse_input(t_vars *vars, int argc, const char *argv[]);
-int			ft_atoi_p(const char *str, int *number);
+int				parse_input(t_vars *vars, int argc, const char **argv);
+int				ft_atoi_p(const char *str, int *number);
 
 //errors
-void		error_exit(void);
-void		*null_exit(void *ptr);
+void			error_exit(void);
+void			*null_exit(void *ptr);
 
 //debuggers
-void		print_stacks(t_vars *stack);
+void			print_stacks(t_vars *stack);
 
 //instructions
-void	swap_a(t_vars *vars);
-void	swap_b(t_vars *vars);
-void	swap_ab(t_vars *vars);
-void	push_a(t_vars *vars);
-void	push_b(t_vars *vars);
-void	rotate_a(t_vars *vars);
-void	rotate_b(t_vars *vars);
-void	rotate_ab(t_vars *vars);
-void	reverse_rotate_a(t_vars *vars);
-void	reverse_rotate_b(t_vars *vars);
-void	reverse_rotate_ab(t_vars *vars);
-int		check_order_a(t_vars *vars);
-int		check_order_b(t_vars *vars);
+void			swap_a(t_vars *vars);
+void			swap_b(t_vars *vars);
+void			swap_ab(t_vars *vars);
+void			push_a(t_vars *vars);
+void			push_b(t_vars *vars);
+void			rotate_a(t_vars *vars);
+void			rotate_b(t_vars *vars);
+void			rotate_ab(t_vars *vars);
+void			reverse_rotate_a(t_vars *vars);
+void			reverse_rotate_b(t_vars *vars);
+void			reverse_rotate_ab(t_vars *vars);
 
 #endif

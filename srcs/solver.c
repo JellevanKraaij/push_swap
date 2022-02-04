@@ -12,9 +12,9 @@
 
 #include "push_swap.h"
 
-unsigned int count_bits(unsigned int n)
+unsigned int	count_bits(unsigned int n)
 {
-	unsigned int ret;
+	unsigned int	ret;
 
 	ret = 0;
 	while (n)
@@ -27,72 +27,25 @@ unsigned int count_bits(unsigned int n)
 
 void	solver_radix(t_vars *vars)
 {
-	unsigned int				bitcnt;
 	const unsigned int	max_bit = count_bits(vars->arg_count);
-	unsigned int	i;
-	bitcnt  = 0;
+	unsigned int		bitcnt;
+	unsigned int		i;
 
-
+	bitcnt = 0;
+	lststack_idx(vars->stack_a);
 	while (bitcnt < max_bit)
 	{
 		i = 0;
 		while (i < vars->arg_count)
 		{
-			// printf("before lastbit_t\n");
-			if (((stack_a_idx(vars)) & (1 << bitcnt))) 
-			{
-				// printf("rotate a\n");
+			if (vars->stack_a->idx & (1 << bitcnt))
 				rotate_a(vars);
-			}
 			else
-			{
 				push_b(vars);
-				// printf("push b\n");
-			}
 			i++;
-			// printf("i = %d bitcnt = %d argc = %d\n", i, bitcnt, vars->arg_count);
 		}
-		while(vars->stack_b != NULL)
-		{
-			// printf("push a\n");
+		while (vars->stack_b != NULL)
 			push_a(vars);
-		}
 		bitcnt++;
-	}
-}
-
-int	check_order_a(t_vars *vars)
-{
-	unsigned int i;
-	t_lststack *tmp;
-
-	i = 0;
-	tmp = vars->stack_a;
-	while (1)
-	{
-		if (tmp->idx != i)
-			return (0);
-		tmp = tmp->next;
-		i++;
-		if (tmp == vars->stack_a)
-			return (1);
-	}
-}
-
-int	check_order_b(t_vars *vars)
-{
-	unsigned int i;
-	t_lststack *tmp;
-
-	i = 0;
-	tmp = vars->stack_a;
-	while (1)
-	{
-		if (tmp->idx != i)
-			return (0);
-		tmp = tmp->next;
-		i++;
-		if (tmp == vars->stack_a)
-			return (1);
 	}
 }

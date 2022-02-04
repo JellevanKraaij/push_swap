@@ -20,20 +20,33 @@ void print_result_f(void *data)
 
 void print_result(t_vars *vars)
 {
-	printf("Instructions:\n");
 	ft_lstiter(vars->instructions, print_result_f);
 }
 
 
 int	main(int argc, char const *argv[])
 {
-	t_vars	vars;
+	t_vars	radix;
+	t_vars	mysolver;
 
-	ft_bzero(&vars, sizeof(vars));
-	parse_input(&vars, argc, argv);
-	print_stacks(&vars);
-	printf("------------\n");
-	solver(&vars);
-	print_stacks(&vars);
-	print_result(&vars);
+	ft_bzero(&radix, sizeof(t_vars));
+	ft_bzero(&mysolver, sizeof(t_vars));
+	parse_input(&radix, argc, argv);
+	parse_input(&mysolver, argc, argv);
+	// if (check_order_a(&radix))
+	// 	return (0);
+	// if(vars.arg_count == 2)
+	// 	solver2(&vars);
+	// else if(vars.arg_count == 3)
+	// 	solver3(&vars);
+	// else
+	// 	solver_radix(&vars);
+	// 	// my_solver(&vars);
+	// // print_stacks(&vars);
+	// my_solver(&mysolver);
+	solver_radix(&radix);
+	
+	fprintf(fopen("output_debug.txt", "w"), "amount of moves radix=%d, my_solver=%d", ft_lstsize(radix.instructions), ft_lstsize(mysolver.instructions));
+
+	print_result(&radix);
 }

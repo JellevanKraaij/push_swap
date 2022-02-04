@@ -25,7 +25,8 @@ SRCS		=	main.c \
 				utils/ft_atoi_p.c \
 				debug/print.c \
 				instructions.c \
-				solver.c
+				solver.c \
+				small_solvers.c
 
 DIR_CREATE	= @mkdir -p $(@D)
 _HEADERS	= ${addprefix ${HEADERS_DIR}/, ${HEADERS}}

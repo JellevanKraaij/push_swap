@@ -12,13 +12,14 @@
 
 #include "push_swap.h"
 
-t_lststack *stack_create_elem(int idx)
+t_lststack *stack_create_elem(int nr)
 {
 	t_lststack *ret;
 
 	ret = null_exit(malloc(sizeof(t_lststack)));
 
-	ret->idx = idx;
+	ret->nr = nr;
+	ret->idx = 0;
 	ret->prev = ret;
 	ret->next = ret;
 	return (ret);
@@ -27,27 +28,42 @@ t_lststack *stack_create_elem(int idx)
 void	stack_clear_list(t_lststack *stack)
 {
 	t_lststack *tmp;
+	t_lststack *current;
 
-	tmp = stack->next;
-
-	free(tmp->prev);
-	while (stack != tmp)
+	current = stack->next;
+	while (current != stack)
 	{
-		tmp = tmp->next;
-		free(tmp->prev);
+		tmp = current->next;
+		free(current);
+		current = tmp;
 	}
+	free(stack);
 }
 
-int stack_a_idx(t_vars *vars)
+unsigned int stack_a_idx(t_vars *vars)
 {
 	if (vars->stack_a == NULL)
 		printf("error stack_a empty\n");
 	return (vars->stack_a->idx);
 }
 
-int stack_b_idx(t_vars *vars)
+unsigned int stack_b_idx(t_vars *vars)
 {
-	if (vars->stack_a == NULL)
+	if (vars->stack_b== NULL)
 		printf("error stack_b empty\n");
 	return (vars->stack_b->idx);
+}
+
+unsigned int stack_a_next_idx(t_vars *vars)
+{
+	if (vars->stack_a == NULL)
+		printf("error stack_a empty\n");
+	return (vars->stack_a->next->idx);
+}
+
+unsigned int stack_b_next_idx(t_vars *vars)
+{
+	if (vars->stack_b == NULL)
+		printf("error stack_b empty\n");
+	return (vars->stack_b->next->idx);
 }

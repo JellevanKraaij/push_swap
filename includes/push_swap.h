@@ -27,32 +27,37 @@
 # define REVERSE_ROTATE_B	"rrb"
 # define REVERSE_ROTATE_AB	"rrr"
 
-#define LASTBIT_T(x) (x ^ (1 << ((sizeof(int) * 8) - 1)))
-
 typedef struct s_lststack
 {
 	struct s_lststack	*prev;
-	int		idx;
+	int					nr;
+	unsigned int		idx;
 	struct s_lststack	*next;
 }	t_lststack;
 
 typedef struct s_vars
 {
-	t_lststack	*stack_a;
-	t_lststack	*stack_b;
-	t_list		*instructions;
-	int			arg_count;
+	t_lststack		*stack_a;
+	t_lststack		*stack_b;
+	t_list			*instructions;
+	unsigned int	arg_count;
 }	t_vars;
 
 void		print_result(t_vars *vars);
-void		solver(t_vars *vars);
+void		my_solver(t_vars *vars);
+void		solver2(t_vars *vars);
+void		solver3(t_vars *vars);
+void		solver_radix(t_vars *vars);
 
 
 //constructors
-t_lststack	*stack_create_elem(int idx);
+t_lststack	*stack_create_elem(int nr);
 void		stack_clear_list(t_lststack *stack);
-int stack_a_idx(t_vars *vars);
-int stack_b_idx(t_vars *vars);
+unsigned int stack_a_idx(t_vars *vars);
+unsigned int stack_b_idx(t_vars *vars);
+unsigned int stack_a_next_idx(t_vars *vars);
+unsigned int stack_b_next_idx(t_vars *vars);
+
 
 //input parsing
 void		parse_input(t_vars *vars, int argc, const char *argv[]);
@@ -77,5 +82,7 @@ void	rotate_ab(t_vars *vars);
 void	reverse_rotate_a(t_vars *vars);
 void	reverse_rotate_b(t_vars *vars);
 void	reverse_rotate_ab(t_vars *vars);
+int		check_order_a(t_vars *vars);
+int		check_order_b(t_vars *vars);
 
 #endif

@@ -21,18 +21,45 @@ static int	check_doubles(t_vars *vars, int num)
 
 	tmp = vars->stack_a->next;
 
-	if (vars->stack_a->idx == num)
+	if (vars->stack_a->nr == num)
 	{
 		return(1);
 	}
 
 	while (vars->stack_a != tmp)
 	{
-		if (tmp->idx == num)
+		if (tmp->nr == num)
 			return(1);
 		tmp = tmp->next;
 	}
 	return (0);
+}
+
+void	add_idx(t_vars *vars)
+{
+	unsigned int i;
+	int smallest_nr;
+	t_lststack *tmp;
+	t_lststack *smallest;
+	
+
+	smallest = NULL;
+	smallest_nr = -2147483648;
+	i = 0;
+	tmp = vars->stack_a;
+	while (i < vars->arg_count)
+	{
+		if ((smallest == NULL || tmp->nr < smallest->nr) && tmp->nr > smallest_nr)
+			smallest = tmp;
+		tmp = tmp->next;
+		if (tmp == vars->stack_a)
+		{
+			smallest->idx = i;
+			i++;
+			smallest_nr = smallest->nr;
+			smallest = NULL;
+		}
+	}
 }
 
 void	parse_input(t_vars *vars, int argc, const char *argv[])
@@ -71,4 +98,5 @@ void	parse_input(t_vars *vars, int argc, const char *argv[])
 		i++;
 	}
 	vars->arg_count = argc - 1;
+	add_idx(vars);
 }

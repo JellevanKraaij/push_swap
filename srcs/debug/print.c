@@ -20,10 +20,10 @@ void	print_stacks(t_vars *vars)
 	if (vars->stack_a != NULL)
 	{
 		tmp = vars->stack_a->next;
-		printf("%-5d", vars->stack_a->idx);
+		printf("%d:%d  ", vars->stack_a->nr, vars->stack_a->idx);
 		while (vars->stack_a != tmp)
 		{
-			printf("%-5d", tmp->idx);
+			printf("%d:%d  ", tmp->nr, tmp->idx);
 			tmp = tmp->next;
 		}
 	}
@@ -32,10 +32,10 @@ void	print_stacks(t_vars *vars)
 	{
 		tmp = vars->stack_b->next;
 
-		printf("%-5d", vars->stack_b->idx);
+		printf("%-5d", vars->stack_b->nr);
 		while (vars->stack_b != tmp)
 		{
-			printf("%-5d", tmp->idx);
+			printf("%-5d", tmp->nr);
 			tmp = tmp->next;
 		}
 	}

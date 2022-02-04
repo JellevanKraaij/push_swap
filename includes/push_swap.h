@@ -44,10 +44,11 @@ typedef struct s_vars
 }	t_vars;
 
 void		print_result(t_vars *vars);
-void		my_solver(t_vars *vars);
 void		solver2(t_vars *vars);
 void		solver3(t_vars *vars);
 void		solver_radix(t_vars *vars);
+int			check_order_a(t_vars *vars);
+int			check_order_b(t_vars *vars);
 
 
 //constructors

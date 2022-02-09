@@ -24,8 +24,8 @@ SRCS		=	main.c \
 				utils/ft_atoi_p.c \
 				solver.c \
 				small_solvers.c \
-				stack_functions/lststack_c_d.c \
-				stack_functions/lststack_m.c \
+				stack_functions/lststack_ctors.c \
+				stack_functions/lststack_imp.c \
 				instructions/push.c \
 				instructions/swap.c \
 				instructions/rotate.c \

@@ -12,50 +12,32 @@
 
 #include "push_swap.h"
 
+static void	swap_stack(t_lststack **head)
+{
+	t_lststack	*tmp1;
+	t_lststack	*tmp2;
+
+	tmp1 = lststack_remove_front(head);
+	tmp2 = lststack_remove_front(head);
+	lststack_add_front(head, tmp1);
+	lststack_add_front(head, tmp2);
+}
+
 void	swap_a(t_vars *vars)
 {	
-	int				tmp_nr;
-	unsigned int	tmp_idx;
-
-	tmp_nr = vars->stack_a->nr;
-	tmp_idx = vars->stack_a->idx;
-	vars->stack_a->nr = vars->stack_a->next->nr;
-	vars->stack_a->next->nr = tmp_nr;
-	vars->stack_a->idx = vars->stack_a->next->idx;
-	vars->stack_a->next->idx = tmp_idx;
+	swap_stack(&vars->stack_a);
 	ft_lstadd_back(&vars->instruc, null_exit(ft_lstnew(SWAP_A)));
 }
 
 void	swap_b(t_vars *vars)
 {	
-	int				tmp_nr;
-	unsigned int	tmp_idx;
-
-	tmp_nr = vars->stack_b->nr;
-	tmp_idx = vars->stack_b->idx;
-	vars->stack_b->nr = vars->stack_b->next->nr;
-	vars->stack_b->next->nr = tmp_nr;
-	vars->stack_b->idx = vars->stack_b->next->idx;
-	vars->stack_b->next->idx = tmp_idx;
-	ft_lstadd_back(&vars->instruc, null_exit(ft_lstnew(SWAP_B)));
+	swap_stack(&vars->stack_b);
+	ft_lstadd_back(&vars->instruc, null_exit(ft_lstnew(SWAP_A)));
 }
 
 void	swap_ab(t_vars *vars)
 {	
-	int				tmp_nr;
-	unsigned int	tmp_idx;
-
-	tmp_nr = vars->stack_a->nr;
-	tmp_idx = vars->stack_a->idx;
-	vars->stack_a->nr = vars->stack_a->next->nr;
-	vars->stack_a->next->nr = tmp_nr;
-	vars->stack_a->idx = vars->stack_a->next->idx;
-	vars->stack_a->next->idx = tmp_idx;
-	tmp_nr = vars->stack_b->nr;
-	tmp_idx = vars->stack_b->idx;
-	vars->stack_b->nr = vars->stack_b->next->nr;
-	vars->stack_b->next->nr = tmp_nr;
-	vars->stack_b->idx = vars->stack_b->next->idx;
-	vars->stack_b->next->idx = tmp_idx;
+	swap_stack(&vars->stack_a);
+	swap_stack(&vars->stack_b);
 	ft_lstadd_back(&vars->instruc, null_exit(ft_lstnew(SWAP_AB)));
 }

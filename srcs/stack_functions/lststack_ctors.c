@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lststack_c_d.c                                     :+:    :+:            */
+/*   lststack_ctors.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jvan-kra <jvan-kra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
@@ -58,4 +58,41 @@ void	lststack_clear(t_lststack **stack)
 	}
 	free(*stack);
 	*stack = NULL;
+}
+
+void	lststack_add_front(t_lststack **head, t_lststack *node)
+{
+	if (node == NULL)
+		return ;
+	if (*head == NULL)
+	{
+		node->next = node;
+		node->prev = node;
+		*head = node;
+		return ;
+	}
+	node->next = *head;
+	node->prev = (*head)->prev;
+	(*head)->prev->next = node;
+	(*head)->prev = node;
+	*head = node;
+}
+
+//removes first element of list and returns it
+t_lststack	*lststack_remove_front(t_lststack **head)
+{
+	t_lststack	*ret;
+
+	if (*head == NULL)
+		return (NULL);
+	ret = *head;
+	if (*head == (*head)->next)
+	{
+		*head = NULL;
+		return (ret);
+	}
+	(*head)->prev->next = (*head)->next;
+	(*head)->next->prev = (*head)->prev;
+	*head = (*head)->next;
+	return (ret);
 }

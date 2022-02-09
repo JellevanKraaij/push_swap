@@ -52,7 +52,9 @@ void			rotate_to_a(t_vars *vars, unsigned int num);
 
 //lststack functions
 t_lststack		*lststack_new(int nr);
+void			lststack_add_front(t_lststack **head, t_lststack *node);
 void			lststack_add_back(t_lststack **head, t_lststack *new);
+t_lststack		*lststack_remove_front(t_lststack **head);
 void			lststack_clear(t_lststack **stack);
 unsigned int	lststack_length(t_lststack *head);
 void			lststack_idx(t_lststack *head);

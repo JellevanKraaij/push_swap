@@ -48,6 +48,7 @@ void			solver2(t_vars *vars);
 void			solver3(t_vars *vars);
 void			solver5(t_vars *vars);
 void			solver_radix(t_vars *vars);
+void			solver_insertion(t_vars *vars);
 void			rotate_to_a(t_vars *vars, unsigned int num);
 
 //lststack functions
@@ -67,9 +68,6 @@ int				ft_atoi_p(const char *str, int *number);
 //errors
 void			error_exit(void);
 void			*null_exit(void *ptr);
-
-//debuggers
-void			print_stacks(t_vars *stack);
 
 //instructions
 void			swap_a(t_vars *vars);

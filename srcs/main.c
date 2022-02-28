@@ -39,6 +39,6 @@ int	main(int argc, char const *argv[])
 	else if (vars.arg_count == 5)
 		solver5(&vars);
 	else
-		solver_radix(&vars);
+		solver_insertion(&vars);
 	print_result(&vars);
 }

@@ -187,4 +187,5 @@ void solver_insertion(t_vars *vars)
 		push_a(vars);
 		i++;
 	}
+	rotate_to_a(vars, 0);
 }

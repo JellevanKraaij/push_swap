@@ -15,6 +15,8 @@
 # include <libft.h>
 # include <stdio.h>
 
+# define UINT_ABS(x)		(unsigned int)ft_abs(x)
+
 # define SWAP_A 			"sa"
 # define SWAP_B				"sb"
 # define SWAP_AB			"ss"

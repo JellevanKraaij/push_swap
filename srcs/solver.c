@@ -50,7 +50,14 @@ void	solver_radix(t_vars *vars)
 	}
 }
 
-void execute_steps_a(t_vars *vars, int steps)
+unsigned int biggest2(unsigned int a, unsigned int b)
+{
+	if(a > b)
+		return (a);
+	return (b);
+}
+
+void execute_rotate_a(t_vars *vars, int steps)
 {
 	while (steps < 0)
 	{
@@ -64,7 +71,7 @@ void execute_steps_a(t_vars *vars, int steps)
 	}
 }
 
-void execute_steps_b(t_vars *vars, int steps)
+void execute_rotate_b(t_vars *vars, int steps)
 {
 	while (steps < 0)
 	{
@@ -78,10 +85,59 @@ void execute_steps_b(t_vars *vars, int steps)
 	}
 }
 
+void execute_rotate_ab(t_vars *vars, int steps)
+{
+	while (steps < 0)
+	{
+		reverse_rotate_ab(vars);
+		steps++;
+	}
+	while (steps > 0)
+	{
+		rotate_ab(vars);
+		steps--;
+	}
+}
+
+void execute_steps(t_vars *vars, int steps_a, int steps_b)
+{
+	if ((steps_a > 0 && steps_b > 0) || (steps_a < 0 && steps_b < 0))
+	{
+		if (UINT_ABS(steps_a) > UINT_ABS(steps_b))
+		{
+			execute_rotate_ab(vars, steps_b);
+			execute_rotate_a(vars, steps_a - steps_b);
+		}
+		else
+		{
+			execute_rotate_ab(vars, steps_a);
+			execute_rotate_b(vars, steps_b - steps_a);
+		}
+	}
+	// else if (steps_a < 0 && steps_b < 0)
+	// {
+	// 	if (steps_a < steps_b)
+	// 	{
+	// 		execute_rotate_ab(vars, steps_b);
+	// 		execute_rotate_a(vars, steps_a - steps_b);
+	// 	}
+	// 	else
+	// 	{
+	// 		execute_rotate_ab(vars, steps_a);
+	// 		execute_rotate_b(vars, steps_b - steps_a);
+	// 	}
+	// }
+	else
+	{
+		execute_rotate_a(vars, steps_a);
+		execute_rotate_b(vars, steps_b);
+	}
+}
+
 int steps_to_pos(t_lststack *head, unsigned int idx)
 {
-	int	steps;
-	int reverse;
+	unsigned int	steps;
+	unsigned int	reverse;
 
 	steps = 0;
 	if (head == head->next)
@@ -107,9 +163,9 @@ int steps_to_pos(t_lststack *head, unsigned int idx)
 		return(reverse * -1);
 }
 
-
 void find_best_moves(t_vars *vars, int *moves_a, int *moves_b)
 {
+	unsigned int steps_tmp;
 	unsigned int b_len;
 	unsigned int i;
 	int best_moves_a;
@@ -123,7 +179,8 @@ void find_best_moves(t_vars *vars, int *moves_a, int *moves_b)
 	i = 0;
 	while(i < b_len / 2)
 	{
-		if ((unsigned int)ft_abs(steps_to_pos(vars->stack_a, tmp->idx)) + i < (unsigned int)ft_abs(best_moves_a))
+		steps_tmp = steps_to_pos(vars->stack_a, tmp->idx);
+		if ((UINT_ABS(steps_tmp) + i < UINT_ABS(best_moves_a)) || (steps_tmp > 0 && biggest2(UINT_ABS(steps_tmp), i) < UINT_ABS(best_moves_a)))
 		{
 			best_moves_a = steps_to_pos(vars->stack_a, tmp->idx);
 			best_moves_b = i;
@@ -163,7 +220,7 @@ void solver_insertion(t_vars *vars)
 
 	while(i < stack_length)
 	{
-		if (vars->stack_a->idx < (i + (stack_length / 8))&& vars->stack_a->idx >= prev)
+		if (vars->stack_a->idx < (i + (stack_length / 10)) && vars->stack_a->idx >= prev)
 		{
 			prev = vars->stack_a->idx;
 			rotate_a(vars);
@@ -172,18 +229,13 @@ void solver_insertion(t_vars *vars)
 			push_b(vars);
 		i++;
 	}
-	if (lststack_check_order(vars->stack_a) == 0)
-	{
-		printf("error");
-		exit(1);
-	}
 	stack_length = lststack_length(vars->stack_b);
+	// printf("first step length = %u\n", lststack_length(vars->stack_a));
 	i = 0;
 	while(i < stack_length)
 	{
 		find_best_moves(vars, &moves_a, &moves_b);
-		execute_steps_a(vars, moves_a);
-		execute_steps_b(vars, moves_b);
+		execute_steps(vars, moves_a, moves_b);
 		push_a(vars);
 		i++;
 	}

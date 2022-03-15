@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   push_swap.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: jvan-kra <jvan-kra@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/16 15:36:02 by jvan-kra      #+#    #+#                 */
-/*   Updated: 2022/01/27 20:24:59 by jvan-kra      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jvan-kra <jvan-kra@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/16 15:36:02 by jvan-kra          #+#    #+#             */
+/*   Updated: 2022/03/15 20:14:26 by jvan-kra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ typedef struct s_vars
 	t_list			*instruc;
 	unsigned int	arg_count;
 }	t_vars;
+
+typedef struct s_moves
+{
+	int a;
+	int b;
+}	t_moves;
+
 
 void			print_result(t_vars *vars);
 void			solver2(t_vars *vars);

@@ -53,10 +53,10 @@ void	solver5(t_vars *vars)
 	push_a(vars);
 }
 
-static unsigned int	calc_rotate_a(t_vars *vars, unsigned int num)
+int	calc_rotate_a(t_vars *vars, int num)
 {
 	t_lststack		*tmp;
-	unsigned int	ret;
+	int	ret;
 
 	ret = 0;
 	if (vars->stack_a->idx == num)
@@ -72,11 +72,11 @@ static unsigned int	calc_rotate_a(t_vars *vars, unsigned int num)
 	return (ret);
 }
 
-void	rotate_to_a(t_vars *vars, unsigned int num)
+void	rotate_to_a(t_vars *vars, int num)
 {
-	unsigned int	i;
-	unsigned int	normal;
-	unsigned int	reverse;
+	int	i;
+	int	normal;
+	int	reverse;
 
 	normal = calc_rotate_a(vars, num);
 	reverse = lststack_length(vars->stack_a) - normal;

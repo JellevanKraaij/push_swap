@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lststack_m.c                                       :+:    :+:            */
+/*   lststack_imp.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jvan-kra <jvan-kra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
@@ -12,9 +12,9 @@
 
 #include "push_swap.h"
 
-unsigned int	lststack_length(t_lststack *head)
+int	lststack_length(t_lststack *head)
 {
-	unsigned int	cnt;
+	int	cnt;
 	t_lststack		*tmp;
 
 	cnt = 0;
@@ -32,11 +32,11 @@ unsigned int	lststack_length(t_lststack *head)
 
 void	lststack_idx(t_lststack *head)
 {
-	unsigned int		i;
+	int		i;
 	int					smallest_nr;
 	t_lststack			*tmp;
 	t_lststack			*smallest;
-	const unsigned int	stack_a_lenght = lststack_length(head);
+	const int	stack_a_lenght = lststack_length(head);
 
 	smallest = NULL;
 	smallest_nr = INT_MIN;

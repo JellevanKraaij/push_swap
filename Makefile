@@ -22,7 +22,8 @@ SRCS		=	main.c \
 				input_parsing.c \
 				utils/errors.c \
 				utils/ft_atoi_p.c \
-				solver.c \
+				solver_radix.c \
+				solver_insertion.c \
 				small_solvers.c \
 				stack_functions/lststack_ctors.c \
 				stack_functions/lststack_imp.c \
@@ -30,6 +31,8 @@ SRCS		=	main.c \
 				instructions/swap.c \
 				instructions/rotate.c \
 				instructions/reverse_rotate.c \
+				instructions/convert_steps.c \
+				instructions/execute_steps.c \
 
 DIR_CREATE	= @mkdir -p $(@D)
 _HEADERS	= ${addprefix ${HEADERS_DIR}/, ${HEADERS}}

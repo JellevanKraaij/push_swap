@@ -26,18 +26,18 @@ static void	swap_stack(t_lststack **head)
 void	swap_a(t_vars *vars)
 {	
 	swap_stack(&vars->stack_a);
-	ft_lstadd_back(&vars->instruc, null_exit(ft_lstnew(SWAP_A)));
+	ft_lstadd_front(&vars->instruc, null_exit(ft_lstnew(SWAP_A)));
 }
 
 void	swap_b(t_vars *vars)
 {	
 	swap_stack(&vars->stack_b);
-	ft_lstadd_back(&vars->instruc, null_exit(ft_lstnew(SWAP_A)));
+	ft_lstadd_front(&vars->instruc, null_exit(ft_lstnew(SWAP_A)));
 }
 
 void	swap_ab(t_vars *vars)
 {	
 	swap_stack(&vars->stack_a);
 	swap_stack(&vars->stack_b);
-	ft_lstadd_back(&vars->instruc, null_exit(ft_lstnew(SWAP_AB)));
+	ft_lstadd_front(&vars->instruc, null_exit(ft_lstnew(SWAP_AB)));
 }

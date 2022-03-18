@@ -50,7 +50,7 @@ typedef struct s_moves
 	int	tot;
 }	t_moves;
 
-void			print_result(t_vars *vars);
+void			print_result(t_list *instructions);
 void			solver2(t_vars *vars);
 void			solver3(t_vars *vars);
 void			solver5(t_vars *vars);

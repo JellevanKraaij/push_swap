@@ -15,11 +15,11 @@
 void	push_a(t_vars *vars)
 {
 	lststack_add_front(&vars->stack_a, lststack_remove_front(&vars->stack_b));
-	ft_lstadd_back(&vars->instruc, null_exit(ft_lstnew(PUSH_A)));
+	ft_lstadd_front(&vars->instruc, null_exit(ft_lstnew(PUSH_A)));
 }
 
 void	push_b(t_vars *vars)
 {
 	lststack_add_front(&vars->stack_b, lststack_remove_front(&vars->stack_a));
-	ft_lstadd_back(&vars->instruc, null_exit(ft_lstnew(PUSH_B)));
+	ft_lstadd_front(&vars->instruc, null_exit(ft_lstnew(PUSH_B)));
 }

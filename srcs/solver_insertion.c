@@ -90,20 +90,16 @@ void	find_best_moves(t_vars *vars, t_moves *best_move)
 	}
 }
 
-void	solver_insertion(t_vars *vars)
+int	prepare_stacks_exec(t_vars *vars, int divider)
 {
-	t_moves	best_move;
-	int		i;
-	int		prev;
-	int		stack_length;
+	int i;
+	int prev;
 
-	lststack_idx(vars->stack_a);
-	stack_length = lststack_length(vars->stack_a);
 	i = 0;
 	prev = 0;
-	while (i < stack_length)
+	while (i < vars->arg_count)
 	{
-		if (vars->stack_a->idx < (i + (stack_length / 10)) && vars->stack_a->idx >= prev)
+		if (vars->stack_a->idx < (i + (vars->arg_count / divider)) && vars->stack_a->idx >= prev)
 		{
 			prev = vars->stack_a->idx;
 			rotate_a(vars);
@@ -112,14 +108,53 @@ void	solver_insertion(t_vars *vars)
 			push_b(vars);
 		i++;
 	}
-	stack_length = lststack_length(vars->stack_b);
+	return (lststack_length(vars->stack_b));
+}
+
+void prepare_stacks(t_vars **vars)
+{
+	t_vars *tmp;
+	int		tmp_len;
+	t_vars *best;
+	int		bestlen;
+	int		i;
+
+	bestlen = (*vars)->arg_count;
+	i = 1;
+	while(i < 50)
+	{
+		tmp = vars_copy(*vars);
+		tmp_len = prepare_stacks_exec(tmp, i);
+		// printf("i = %d, steps = %d\n", i, tmp_len);
+		if (tmp_len < bestlen)
+		{
+			best = tmp;
+			bestlen = tmp_len;
+		}
+		else
+			vars_destroy(tmp);
+		i++;
+	}
+	vars_destroy(*vars);
+	*vars = best;
+}
+
+void	solver_insertion(t_vars **vars)
+{
+	t_moves	best_move;
+	int		i;
+	int		stack_length;
+
+	lststack_idx((*vars)->stack_a);
+	prepare_stacks(vars);
+	stack_length = lststack_length((*vars)->stack_b);
 	i = 0;
 	while (i < stack_length)
 	{
-		find_best_moves(vars, &best_move);
-		execute_steps(vars, best_move);
-		push_a(vars);
+		find_best_moves(*vars, &best_move);
+		execute_steps(*vars, best_move);
+		push_a(*vars);
 		i++;
 	}
-	rotate_to_a(vars, 0);
+	rotate_to_a(*vars, 0);
 }

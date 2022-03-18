@@ -24,21 +24,22 @@ void	print_result(t_vars *vars)
 
 int	main(int argc, char const *argv[])
 {
-	t_vars	vars;
+	t_vars	*vars;
 
-	ft_bzero(&vars, sizeof(t_vars));
-	vars.arg_count = parse_input(&vars, argc, argv);
-	if (vars.arg_count < 1)
+	vars = vars_init();
+	vars->arg_count = parse_input(vars, argc, argv);
+	if (vars->arg_count < 1)
 		error_exit();
-	if (lststack_check_order(vars.stack_a))
+	if (lststack_check_order(vars->stack_a))
 		return (0);
-	if (vars.arg_count == 2)
-		solver2(&vars);
-	else if (vars.arg_count == 3)
-		solver3(&vars);
-	else if (vars.arg_count == 5)
-		solver5(&vars);
+	if (vars->arg_count == 2)
+		solver2(vars);
+	else if (vars->arg_count == 3)
+		solver3(vars);
+	else if (vars->arg_count == 5)
+		solver5(vars);
 	else
 		solver_insertion(&vars);
-	print_result(&vars);
+	print_result(vars);
+	vars_destroy(vars);
 }

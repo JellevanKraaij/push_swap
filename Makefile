@@ -25,6 +25,7 @@ SRCS		=	main.c \
 				solver_radix.c \
 				solver_insertion.c \
 				small_solvers.c \
+				vars.c \
 				stack_functions/lststack_ctors.c \
 				stack_functions/lststack_imp.c \
 				instructions/push.c \

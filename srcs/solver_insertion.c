@@ -48,10 +48,8 @@ typedef struct s_rotations
 	t_moves	opt;
 }	t_rotations;
 
-t_moves	fill_move(t_lststack *stack_a, t_lststack *stack_b, int steps_b)
+t_moves	fill_move(t_lststack *stack_a, t_lststack *stack_b, int steps_b, int alen, int blen)
 {
-	const int	alen = lststack_length(stack_a);
-	const int	blen = lststack_length(stack_b);
 	t_rotations	rots;
 
 	rots.norm.a = steps_to_pos(stack_a, stack_b->idx);
@@ -70,20 +68,19 @@ t_moves	fill_move(t_lststack *stack_a, t_lststack *stack_b, int steps_b)
 	return (rots.opt);
 }
 
-void	find_best_moves(t_vars *vars, t_moves *best_move)
+void	find_best_moves(t_vars *vars, t_moves *best_move, int stacklena, int stacklenb)
 {
-	const int	stacklenb = lststack_length(vars->stack_b);
 	t_moves		steps_tmp;
 	int			i;
 	t_lststack	*tmp;
 
 	tmp = vars->stack_b;
-	*best_move = fill_move(vars->stack_a, vars->stack_b, 0);
+	*best_move = fill_move(vars->stack_a, vars->stack_b, 0, stacklena, stacklenb);
 	i = 1;
 	while (i < stacklenb)
 	{
 		tmp = tmp->next;
-		steps_tmp = fill_move(vars->stack_a, tmp, i);
+		steps_tmp = fill_move(vars->stack_a, tmp, i, stacklena,  stacklenb);
 		if (steps_tmp.tot < best_move->tot)
 			*best_move = steps_tmp;
 		i++;
@@ -143,15 +140,17 @@ void	solver_insertion(t_vars **vars)
 {
 	t_moves	best_move;
 	int		i;
-	int		stack_length;
+	int		stacklenb;
+	int		stacklena;
 
 	lststack_idx((*vars)->stack_a);
 	prepare_stacks(vars);
-	stack_length = lststack_length((*vars)->stack_b);
+	stacklena = lststack_length((*vars)->stack_a);
+	stacklenb = lststack_length((*vars)->stack_b);
 	i = 0;
-	while (i < stack_length)
+	while (i < stacklenb)
 	{
-		find_best_moves(*vars, &best_move);
+		find_best_moves(*vars, &best_move, stacklena + i, stacklenb - i);
 		execute_steps(*vars, best_move);
 		push_a(*vars);
 		i++;

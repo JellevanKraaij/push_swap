@@ -21,6 +21,9 @@ void	error_exit(void)
 void	*null_exit(void *ptr)
 {
 	if (ptr == NULL)
+	{
+		printf("whoop whoop big error!\n");
 		error_exit();
+	}
 	return (ptr);
 }

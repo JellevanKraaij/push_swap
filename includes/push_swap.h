@@ -55,12 +55,12 @@ void			solver2(t_vars *vars);
 void			solver3(t_vars *vars);
 void			solver5(t_vars *vars);
 void			solver_radix(t_vars *vars);
-void			solver_insertion(t_vars *vars);
+void			solver_insertion(t_vars **vars);
 void			rotate_to_a(t_vars *vars, int num);
 int				calc_rotate_a(t_vars *vars, int num);
 
 //lststack functions
-t_lststack		*lststack_new(int nr);
+t_lststack		*lststack_new(int nr, int idx);
 void			lststack_add_front(t_lststack **head, t_lststack *node);
 void			lststack_add_back(t_lststack **head, t_lststack *new);
 t_lststack		*lststack_remove_front(t_lststack **head);
@@ -101,4 +101,11 @@ void			execute_rotate_a(t_vars *vars, int steps);
 void			execute_rotate_b(t_vars *vars, int steps);
 void			execute_rotate_ab(t_vars *vars, int steps);
 void			execute_steps(t_vars *vars, t_moves best_move);
+
+//vars
+
+t_vars			*vars_init(void);
+t_vars			*vars_destroy(t_vars *vars);
+t_vars			*vars_copy(t_vars *vars);
+
 #endif

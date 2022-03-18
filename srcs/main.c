@@ -17,9 +17,12 @@ void	print_result_f(void *data)
 	printf("%s\n", (char *)data);
 }
 
-void	print_result(t_vars *vars)
+void	print_result(t_list *instructions)
 {
-	ft_lstiter(vars->instruc, print_result_f);
+	if (instructions == NULL)
+		return ;
+	print_result(instructions->next);
+	print_result_f(instructions->content);
 }
 
 int	main(int argc, char const *argv[])
@@ -40,6 +43,6 @@ int	main(int argc, char const *argv[])
 		solver5(vars);
 	else
 		solver_insertion(&vars);
-	print_result(vars);
+	print_result(vars->instruc);
 	vars_destroy(vars);
 }

@@ -35,7 +35,7 @@ static int	check_doubles(t_vars *vars, int num)
 int	parse_input(t_vars *vars, int argc, const char **argv)
 {
 	int				i;
-	int	j;
+	int				j;
 	int				nr;
 	char			**arg_split;
 

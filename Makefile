@@ -34,6 +34,8 @@ SRCS		=	main.c \
 				instructions/reverse_rotate.c \
 				instructions/convert_steps.c \
 				instructions/execute_steps.c \
+				utils/biggest2.c \
+				solver_insertion_helpers.c
 
 DIR_CREATE	= @mkdir -p $(@D)
 _HEADERS	= ${addprefix ${HEADERS_DIR}/, ${HEADERS}}

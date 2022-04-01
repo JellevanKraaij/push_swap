@@ -56,7 +56,7 @@ void	solver5(t_vars *vars)
 int	calc_rotate_a(t_vars *vars, int num)
 {
 	t_lststack		*tmp;
-	int	ret;
+	int				ret;
 
 	ret = 0;
 	if (vars->stack_a->idx == num)

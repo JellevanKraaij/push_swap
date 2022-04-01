@@ -14,15 +14,15 @@
 
 t_vars	*vars_init(void)
 {
-	return(null_exit(ft_calloc(1, sizeof(t_vars))));
+	return (null_exit(ft_calloc(1, sizeof(t_vars))));
 }
 
-static void lstdelf(void *str)
+static void	lstdelf(void *str)
 {
 	(void)str;
 }
 
-static void *lstmapf(void *str)
+static void	*lstmapf(void *str)
 {
 	return (str);
 }
@@ -36,35 +36,31 @@ t_vars	*vars_destroy(t_vars *vars)
 	return (NULL);
 }
 
-t_vars *vars_copy(t_vars *vars)
+t_vars	*vars_copy(t_vars *vars)
 {
-	t_vars *ret;
-	t_lststack *tmp;
-	int i;
-	int length;
+	t_vars		*ret;
+	t_lststack	*tmp;
+	int			length;
 
 	ret = vars_init();
 	ret->arg_count = vars->arg_count;
 	if (vars->instruc != NULL)
 		ret->instruc = null_exit(ft_lstmap(vars->instruc, lstmapf, lstdelf));
-
-	i = 0;
 	length = lststack_length(vars->stack_a);
 	tmp = vars->stack_a;
-	while(i < length)
+	while (length)
 	{
 		lststack_add_back(&ret->stack_a, lststack_new(tmp->nr, tmp->idx));
 		tmp = tmp->next;
-		i++;
+		length--;
 	}
-	i = 0;
 	length = lststack_length(vars->stack_b);
 	tmp = vars->stack_b;
-	while(i < length)
+	while (length)
 	{
 		lststack_add_back(&ret->stack_b, lststack_new(tmp->nr, tmp->idx));
 		tmp = tmp->next;
-		i++;
+		length--;
 	}
 	return (ret);
 }

@@ -12,8 +12,8 @@
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
+
 # include <libft.h>
-# include <stdio.h>
 
 # define SWAP_A 			"sa"
 # define SWAP_B				"sb"
@@ -56,6 +56,7 @@ void			solver3(t_vars *vars);
 void			solver5(t_vars *vars);
 void			solver_radix(t_vars *vars);
 void			solver_insertion(t_vars **vars);
+int				prepare_stack_a(t_vars *vars, int divider);
 void			rotate_to_a(t_vars *vars, int num);
 int				calc_rotate_a(t_vars *vars, int num);
 
@@ -103,9 +104,11 @@ void			execute_rotate_ab(t_vars *vars, int steps);
 void			execute_steps(t_vars *vars, t_moves best_move);
 
 //vars
-
 t_vars			*vars_init(void);
 t_vars			*vars_destroy(t_vars *vars);
 t_vars			*vars_copy(t_vars *vars);
+
+//Misc
+int				biggest2(int a, int b);
 
 #endif

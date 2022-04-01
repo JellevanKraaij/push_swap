@@ -29,7 +29,7 @@ void	solver_radix(t_vars *vars)
 {
 	const unsigned int	max_bit = count_bits(vars->arg_count);
 	unsigned int		bitcnt;
-	int		i;
+	int					i;
 
 	bitcnt = 0;
 	lststack_idx(vars->stack_a);

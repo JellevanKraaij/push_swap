@@ -48,7 +48,7 @@ typedef struct s_rotations
 	t_moves	opt;
 }	t_rotations;
 
-t_moves	fill_move(t_lststack *stack_a, t_lststack *stack_b, int steps_b, int alen, int blen)
+t_moves	fill_move (t_lststack *stack_a, t_lststack *stack_b, int steps_b, int alen, int blen)
 {
 	t_rotations	rots;
 
@@ -108,29 +108,50 @@ int	prepare_stacks_exec(t_vars *vars, int divider)
 	return (lststack_length(vars->stack_b));
 }
 
-void prepare_stacks(t_vars **vars)
+void	execute_insertion(t_vars *vars)
 {
-	t_vars *tmp;
+	t_moves	best_move;
+	int		i;
+	int		stacklenb;
+	int		stacklena;
+
+	stacklena = lststack_length(vars->stack_a);
+	stacklenb = lststack_length(vars->stack_b);
+	i = 0;
+	while (i < stacklenb)
+	{
+		find_best_moves(vars, &best_move, stacklena + i, stacklenb - i);
+		execute_steps(vars, best_move);
+		push_a(vars);
+		i++;
+	}
+	rotate_to_a(vars, 0);
+}
+
+void	prepare_stacks(t_vars **vars)
+{
+	t_vars	*tmp;
 	int		tmp_len;
-	t_vars *best;
+	t_vars	*best;
 	int		bestlen;
 	int		i;
 
-	bestlen = (*vars)->arg_count;
 	i = 1;
-	while(i < 50)
+	bestlen = 0;
+	while (i < 50)
 	{
 		tmp = vars_copy(*vars);
-		tmp_len = prepare_stacks_exec(tmp, i);
-		// printf("i = %d, steps = %d\n", i, tmp_len);
-		if (tmp_len < bestlen)
+		prepare_stacks_exec(tmp, i);
+		execute_insertion(tmp);
+		tmp_len = ft_lstsize((*vars)->instruc);
+		if (tmp_len < bestlen || bestlen == 0)
 		{
 			best = tmp;
 			bestlen = tmp_len;
 		}
 		else
 			vars_destroy(tmp);
-		i++;
+		i += 2;
 	}
 	vars_destroy(*vars);
 	*vars = best;
@@ -138,22 +159,6 @@ void prepare_stacks(t_vars **vars)
 
 void	solver_insertion(t_vars **vars)
 {
-	t_moves	best_move;
-	int		i;
-	int		stacklenb;
-	int		stacklena;
-
 	lststack_idx((*vars)->stack_a);
 	prepare_stacks(vars);
-	stacklena = lststack_length((*vars)->stack_a);
-	stacklenb = lststack_length((*vars)->stack_b);
-	i = 0;
-	while (i < stacklenb)
-	{
-		find_best_moves(*vars, &best_move, stacklena + i, stacklenb - i);
-		execute_steps(*vars, best_move);
-		push_a(*vars);
-		i++;
-	}
-	rotate_to_a(*vars, 0);
 }

@@ -14,7 +14,7 @@
 
 void	print_result_f(void *data)
 {
-	printf("%s\n", (char *)data);
+	ft_putendl_fd((char *)data, 1);
 }
 
 void	print_result(t_list *instructions)

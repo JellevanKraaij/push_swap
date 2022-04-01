@@ -14,7 +14,7 @@
 
 int	lststack_length(t_lststack *head)
 {
-	int	cnt;
+	int				cnt;
 	t_lststack		*tmp;
 
 	cnt = 0;
@@ -32,11 +32,11 @@ int	lststack_length(t_lststack *head)
 
 void	lststack_idx(t_lststack *head)
 {
-	int		i;
+	int					i;
 	int					smallest_nr;
 	t_lststack			*tmp;
 	t_lststack			*smallest;
-	const int	stack_a_lenght = lststack_length(head);
+	const int			stack_a_lenght = lststack_length(head);
 
 	smallest = NULL;
 	smallest_nr = INT_MIN;

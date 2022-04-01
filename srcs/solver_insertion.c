@@ -11,13 +11,20 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdio.h>
 
-int	biggest2(int a, int b)
+typedef struct s_stacklen
 {
-	if (a > b)
-		return (a);
-	return (b);
-}
+	int	a;
+	int	b;
+}	t_stacklen;
+
+typedef struct s_rotations
+{
+	t_moves	norm;
+	t_moves	rev;
+	t_moves	opt;
+}	t_rotations;
 
 int	steps_to_pos(t_lststack *head, int idx)
 {
@@ -41,25 +48,19 @@ int	steps_to_pos(t_lststack *head, int idx)
 	return (steps);
 }
 
-typedef struct s_rotations
-{
-	t_moves	norm;
-	t_moves	rev;
-	t_moves	opt;
-}	t_rotations;
-
-t_moves	fill_move (t_lststack *stack_a, t_lststack *stack_b, int steps_b, int alen, int blen)
+t_moves	fill_move(t_lststack *stack_a, t_lststack *stack_b, \
+		int steps_b, t_stacklen len)
 {
 	t_rotations	rots;
 
 	rots.norm.a = steps_to_pos(stack_a, stack_b->idx);
 	rots.norm.b = steps_b;
 	rots.norm.tot = biggest2(rots.norm.a, rots.norm.b);
-	rots.opt.a = rot_conv_opt(rots.norm.a, alen);
-	rots.opt.b = rot_conv_opt(rots.norm.b, blen);
+	rots.opt.a = rot_conv_opt(rots.norm.a, len.a);
+	rots.opt.b = rot_conv_opt(rots.norm.b, len.b);
 	rots.opt.tot = ft_abs(rots.opt.a) + ft_abs(rots.opt.b);
-	rots.rev.a = rot_conv_rev(rots.norm.a, alen);
-	rots.rev.b = rot_conv_rev(rots.norm.b, blen);
+	rots.rev.a = rot_conv_rev(rots.norm.a, len.a);
+	rots.rev.b = rot_conv_rev(rots.norm.b, len.b);
 	rots.rev.tot = biggest2(rots.rev.a * -1, rots.rev.b * -1);
 	if (rots.norm.tot <= rots.rev.tot && rots.norm.tot <= rots.opt.tot)
 		return (rots.norm);
@@ -68,97 +69,67 @@ t_moves	fill_move (t_lststack *stack_a, t_lststack *stack_b, int steps_b, int al
 	return (rots.opt);
 }
 
-void	find_best_moves(t_vars *vars, t_moves *best_move, int stacklena, int stacklenb)
+void	find_best_moves(t_vars *vars, t_moves *best_move, t_stacklen len)
 {
 	t_moves		steps_tmp;
 	int			i;
 	t_lststack	*tmp;
 
 	tmp = vars->stack_b;
-	*best_move = fill_move(vars->stack_a, vars->stack_b, 0, stacklena, stacklenb);
+	*best_move = fill_move(vars->stack_a, vars->stack_b, 0, len);
 	i = 1;
-	while (i < stacklenb)
+	while (i < len.b)
 	{
 		tmp = tmp->next;
-		steps_tmp = fill_move(vars->stack_a, tmp, i, stacklena,  stacklenb);
+		steps_tmp = fill_move(vars->stack_a, tmp, i, len);
 		if (steps_tmp.tot < best_move->tot)
 			*best_move = steps_tmp;
 		i++;
 	}
 }
 
-int	prepare_stacks_exec(t_vars *vars, int divider)
-{
-	int i;
-	int prev;
-
-	i = 0;
-	prev = 0;
-	while (i < vars->arg_count)
-	{
-		if (vars->stack_a->idx < (i + (vars->arg_count / divider)) && vars->stack_a->idx >= prev)
-		{
-			prev = vars->stack_a->idx;
-			rotate_a(vars);
-		}
-		else
-			push_b(vars);
-		i++;
-	}
-	return (lststack_length(vars->stack_b));
-}
-
 void	execute_insertion(t_vars *vars)
 {
-	t_moves	best_move;
-	int		i;
-	int		stacklenb;
-	int		stacklena;
+	t_moves		best_move;
+	t_stacklen	len;
 
-	stacklena = lststack_length(vars->stack_a);
-	stacklenb = lststack_length(vars->stack_b);
-	i = 0;
-	while (i < stacklenb)
+	len.a = lststack_length(vars->stack_a);
+	len.b = lststack_length(vars->stack_b);
+	while (len.b)
 	{
-		find_best_moves(vars, &best_move, stacklena + i, stacklenb - i);
+		find_best_moves(vars, &best_move, len);
 		execute_steps(vars, best_move);
 		push_a(vars);
-		i++;
+		len.b--;
+		len.a++;
 	}
 	rotate_to_a(vars, 0);
 }
 
-void	prepare_stacks(t_vars **vars)
+void	solver_insertion(t_vars **vars)
 {
 	t_vars	*tmp;
-	int		tmp_len;
 	t_vars	*best;
 	int		bestlen;
 	int		i;
 
 	i = 1;
 	bestlen = 0;
+	lststack_idx((*vars)->stack_a);
 	while (i < 50)
 	{
 		tmp = vars_copy(*vars);
-		prepare_stacks_exec(tmp, i);
+		prepare_stack_a(tmp, i);
 		execute_insertion(tmp);
-		tmp_len = ft_lstsize((*vars)->instruc);
-		if (tmp_len < bestlen || bestlen == 0)
+		if (ft_lstsize(tmp->instruc) < bestlen || bestlen == 0)
 		{
 			best = tmp;
-			bestlen = tmp_len;
+			bestlen = ft_lstsize(tmp->instruc);
 		}
 		else
 			vars_destroy(tmp);
-		i += 2;
+		i += 10;
 	}
 	vars_destroy(*vars);
 	*vars = best;
-}
-
-void	solver_insertion(t_vars **vars)
-{
-	lststack_idx((*vars)->stack_a);
-	prepare_stacks(vars);
 }

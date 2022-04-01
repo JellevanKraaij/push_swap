@@ -45,7 +45,7 @@ all: ${NAME}
 
 ${BUILD_DIR}/%.o: ${SRCS_DIR}/%.c ${_HEADERS}
 	${DIR_CREATE}
-	${CC} ${CFLAGS} -Ilibft -I${HEADERS_DIR} -c -o $@ $<
+	${CC} ${CFLAGS} -Ilibft/include -I${HEADERS_DIR} -c -o $@ $<
 
 ${LIBFT}:
 	@${MAKE} -C libft

@@ -31,10 +31,16 @@ int	main(int argc, char const *argv[])
 
 	vars = vars_init();
 	vars->arg_count = parse_input(vars, argc, argv);
-	if (vars->arg_count < 1)
+	if (vars->arg_count < 0)
+	{
+		vars_destroy(vars);
 		error_exit();
-	if (lststack_check_order(vars->stack_a))
+	}
+	if (vars->arg_count == 0 || lststack_check_order(vars->stack_a))
+	{
+		vars_destroy(vars);
 		return (0);
+	}
 	if (vars->arg_count == 2)
 		solver2(vars);
 	else if (vars->arg_count == 3)

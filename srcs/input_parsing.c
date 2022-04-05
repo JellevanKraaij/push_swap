@@ -50,9 +50,9 @@ int	parse_input(t_vars *vars, int argc, const char **argv)
 			{
 				ft_split_free(arg_split);
 				lststack_clear(&vars->stack_a);
-				return (0);
+				return (-1);
 			}
-			lststack_add_back(&vars->stack_a, lststack_new(nr, 0));
+			lststack_add_back(&vars->stack_a, lststack_new(nr, -1));
 			j++;
 		}
 		ft_split_free(arg_split);

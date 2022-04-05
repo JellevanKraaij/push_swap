@@ -19,17 +19,18 @@ int	ft_atoi_p(const char *str, int *number)
 
 	ret = 0;
 	sign = 1;
-	if (*str == '-')
+	if (*str == '-' && ft_isdigit(*(str + 1)))
 	{
 		sign = -1;
 		str++;
 	}
-	else if (*str == '+')
+	else if (*str == '+' && ft_isdigit(*(str + 1)))
 		str++;
 	while (ft_isdigit(*str))
 	{
 		ret = (ret * 10) + (*str - '0');
-		if (ret > INT_MAX || (sign == -1 && ret > INT_MAX - 1))
+		if ((sign == 1 && ret > INT_MAX) \
+		|| (sign == -1 && (ret * sign) < INT_MIN))
 			return (-1);
 		str++;
 	}

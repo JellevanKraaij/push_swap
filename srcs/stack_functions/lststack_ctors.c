@@ -30,13 +30,13 @@ void	lststack_add_back(t_lststack **head, t_lststack *new)
 	last->next = new;
 }
 
-t_lststack	*lststack_new(int nr)
+t_lststack	*lststack_new(int nr, int idx)
 {
 	t_lststack	*ret;
 
 	ret = null_exit(malloc(sizeof(t_lststack)));
 	ret->nr = nr;
-	ret->idx = 0;
+	ret->idx = idx;
 	ret->prev = ret;
 	ret->next = ret;
 	return (ret);

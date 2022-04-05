@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   push.c                                             :+:    :+:            */
+/*   solver_insertion_helpers.c                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jvan-kra <jvan-kra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/04 21:24:26 by jvan-kra      #+#    #+#                 */
-/*   Updated: 2022/02/04 21:24:26 by jvan-kra      ########   odam.nl         */
+/*   Created: 2022/04/01 21:59:15 by jvan-kra      #+#    #+#                 */
+/*   Updated: 2022/04/01 21:59:15 by jvan-kra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push_a(t_vars *vars)
+int	prepare_stack_a(t_vars *vars, int divider)
 {
-	lststack_add_front(&vars->stack_a, lststack_remove_front(&vars->stack_b));
-	ft_lstadd_front(&vars->instruc, null_exit(ft_lstnew(PUSH_A)));
-}
+	int	i;
+	int	prev;
 
-void	push_b(t_vars *vars)
-{
-	lststack_add_front(&vars->stack_b, lststack_remove_front(&vars->stack_a));
-	ft_lstadd_front(&vars->instruc, null_exit(ft_lstnew(PUSH_B)));
+	i = 0;
+	prev = 0;
+	while (i < vars->arg_count)
+	{
+		if (vars->stack_a->idx < (i + (vars->arg_count / divider)) \
+		&& vars->stack_a->idx >= prev)
+		{
+			prev = vars->stack_a->idx;
+			rotate_a(vars);
+		}
+		else
+			push_b(vars);
+		i++;
+	}
+	return (lststack_length(vars->stack_b));
 }

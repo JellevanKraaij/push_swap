@@ -35,7 +35,7 @@ static int	check_doubles(t_vars *vars, int num)
 int	parse_input(t_vars *vars, int argc, const char **argv)
 {
 	int				i;
-	unsigned int	j;
+	int				j;
 	int				nr;
 	char			**arg_split;
 
@@ -52,7 +52,7 @@ int	parse_input(t_vars *vars, int argc, const char **argv)
 				lststack_clear(&vars->stack_a);
 				return (-1);
 			}
-			lststack_add_back(&vars->stack_a, lststack_new(nr));
+			lststack_add_back(&vars->stack_a, lststack_new(nr, -1));
 			j++;
 		}
 		ft_split_free(arg_split);

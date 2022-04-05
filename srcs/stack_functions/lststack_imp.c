@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lststack_m.c                                       :+:    :+:            */
+/*   lststack_imp.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jvan-kra <jvan-kra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
@@ -12,9 +12,9 @@
 
 #include "push_swap.h"
 
-unsigned int	lststack_length(t_lststack *head)
+int	lststack_length(t_lststack *head)
 {
-	unsigned int	cnt;
+	int				cnt;
 	t_lststack		*tmp;
 
 	cnt = 0;
@@ -30,31 +30,44 @@ unsigned int	lststack_length(t_lststack *head)
 	}
 }
 
-void	lststack_idx(t_lststack *head)
+void	lststack_idx_prep(t_lststack *head)
 {
-	unsigned int		i;
-	int					smallest_nr;
-	t_lststack			*tmp;
-	t_lststack			*smallest;
-	const unsigned int	stack_a_lenght = lststack_length(head);
+	const int	stacklen = lststack_length(head);
+	t_lststack	*tmp;
+	int			i;
 
-	smallest = NULL;
-	smallest_nr = INT_MIN;
 	i = 0;
 	tmp = head;
-	while (i < stack_a_lenght)
+	while (i < stacklen)
 	{
-		if ((smallest == NULL || tmp->nr < smallest->nr) \
-		&& tmp->nr > smallest_nr)
-			smallest = tmp;
+		tmp->idx = -1;
 		tmp = tmp->next;
-		if (tmp == head)
+		i++;
+	}
+}
+
+void	lststack_idx(t_lststack *head)
+{
+	const int	stacklen = lststack_length(head);
+	t_lststack	*tmp;
+	t_lststack	*smallest;
+	int			i;
+
+	i = 0;
+	tmp = head;
+	smallest = NULL;
+	lststack_idx_prep(head);
+	while (i < stacklen)
+	{
+		if (tmp->idx == -1 && (smallest == NULL || tmp->nr < smallest->nr))
+			smallest = tmp;
+		if (tmp->next == head)
 		{
 			smallest->idx = i;
 			i++;
-			smallest_nr = smallest->nr;
 			smallest = NULL;
 		}
+		tmp = tmp->next;
 	}
 }
 

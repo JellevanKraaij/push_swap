@@ -18,11 +18,6 @@ src/ft_lstdelone.c src/ft_lstclear.c src/ft_lstiter.c src/ft_lstmap.c
 src/ft_reallocf.c src/ft_abs.c
 )
 
-set (CMAKE_C_FLAGS "-Wall -Werror -Wextra")
-set (CMAKE_EXPORT_COMPILE_COMMANDS ON) #vscode include path checking
-add_custom_target(fclean make clean)
-add_custom_target(re make clean COMMAND make)
-
 add_library(ft STATIC ${SRCS})
 
 target_include_directories(ft PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

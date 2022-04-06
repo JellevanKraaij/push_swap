@@ -33,7 +33,6 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-
 size_t	ft_strlen_gnl(const char *s);
 void	*ft_memcpy_gnl(void *dst, const void *src, size_t n);
 char	*lst_fd_get_data(const t_list *lst, int fd);

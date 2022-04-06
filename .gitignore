@@ -4,6 +4,8 @@
 *.o
 *.a
 push_swap
+checker
+build/
 
 # OS generated files #
 ######################

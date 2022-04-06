@@ -14,7 +14,6 @@
 
 void	rotate_a(t_vars *vars)
 {
-
 	if (lststack_length(vars->stack_a) < 1)
 		return ;
 	vars->stack_a = vars->stack_a->next;

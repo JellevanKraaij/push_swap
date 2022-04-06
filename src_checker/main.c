@@ -74,7 +74,6 @@ int	main(int argc, const char *argv[])
 	t_vars	*vars;
 
 	vars = vars_init();
-
 	vars->arg_count = parse_input(vars, argc, argv);
 	if (vars->arg_count < 0)
 	{

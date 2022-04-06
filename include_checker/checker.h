@@ -13,8 +13,6 @@
 #ifndef CHECKER_H
 # define CHECKER_H
 
-
-
 # define SWAP_A 			"sa\n"
 # define SWAP_B				"sb\n"
 # define SWAP_AB			"ss\n"

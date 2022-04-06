@@ -15,11 +15,12 @@ NAME  = push_swap
 all: ${NAME}
 
 ${NAME}:
-	cmake && make
+	mkdir -p build && cd build && cmake .. -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=.. && make
 clean:
-	cmake && make clean
+	rm -rf build
 
 fclean: clean
+	rm -f push_swap checker
 
 re: fclean all
 

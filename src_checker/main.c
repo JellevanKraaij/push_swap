@@ -39,7 +39,7 @@ void	exec_commands(t_vars *vars, char *line)
 	else if (!ft_strncmp(line, PUSH_A, 3))
 		push_a(vars);
 	else if (!ft_strncmp(line, PUSH_B, 3))
-		push_a(vars);
+		push_b(vars);
 	else if (!ft_strncmp(line, ROTATE_A, 3))
 		rotate_a(vars);
 	else if (!ft_strncmp(line, ROTATE_B, 3))
@@ -83,7 +83,6 @@ int	main(int argc, const char *argv[])
 	if (vars->arg_count == 0)
 	{
 		vars_destroy(vars);
-		ft_putendl_fd("OK", 1);
 		return (0);
 	}
 	parse_stdin(vars);

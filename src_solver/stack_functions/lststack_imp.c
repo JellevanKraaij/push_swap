@@ -75,6 +75,8 @@ int	lststack_check_order(t_lststack *head)
 {
 	t_lststack	*tmp;
 
+	if (head == NULL)
+		return (1);
 	tmp = head->next;
 	if (tmp == head)
 		return (1);

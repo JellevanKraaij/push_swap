@@ -36,7 +36,7 @@ int	main(int argc, char const *argv[])
 		vars_destroy(vars);
 		error_exit();
 	}
-	if (vars->arg_count == 0 || lststack_check_order(vars->stack_a))
+	if (lststack_check_order(vars->stack_a))
 	{
 		vars_destroy(vars);
 		return (0);

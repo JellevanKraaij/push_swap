@@ -86,9 +86,9 @@ int	main(int argc, const char *argv[])
 		return (0);
 	}
 	parse_stdin(vars);
-	if (!lststack_check_order(vars->stack_a))
-		ft_putendl_fd("KO", 1);
-	else
+	if (lststack_check_order(vars->stack_a) && !lststack_length(vars->stack_b))
 		ft_putendl_fd("OK", 1);
+	else
+		ft_putendl_fd("KO", 1);
 	vars_destroy(vars);
 }

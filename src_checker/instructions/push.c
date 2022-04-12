@@ -21,7 +21,7 @@ void	push_a(t_vars *vars)
 
 void	push_b(t_vars *vars)
 {
-	if (lststack_length(vars->stack_a) < 0)
+	if (lststack_length(vars->stack_a) < 1)
 		return ;
 	lststack_add_front(&vars->stack_b, lststack_remove_front(&vars->stack_a));
 }

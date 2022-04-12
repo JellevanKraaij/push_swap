@@ -28,8 +28,6 @@ void	reverse_rotate_b(t_vars *vars)
 
 void	reverse_rotate_ab(t_vars *vars)
 {
-	if (lststack_length(vars->stack_a) < 1 || \
-	lststack_length(vars->stack_b) < 1)
-	vars->stack_a = vars->stack_a->prev;
-	vars->stack_b = vars->stack_b->prev;
+	reverse_rotate_a(vars);
+	reverse_rotate_b(vars);
 }

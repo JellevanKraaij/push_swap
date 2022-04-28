@@ -32,7 +32,7 @@ void	swap_a(t_vars *vars)
 void	swap_b(t_vars *vars)
 {	
 	swap_stack(&vars->stack_b);
-	ft_lstadd_front(&vars->instruc, null_exit(ft_lstnew(SWAP_A)));
+	ft_lstadd_front(&vars->instruc, null_exit(ft_lstnew(SWAP_B)));
 }
 
 void	swap_ab(t_vars *vars)
